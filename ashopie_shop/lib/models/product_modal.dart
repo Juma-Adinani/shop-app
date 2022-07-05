@@ -11,6 +11,7 @@ class Product {
   String? quantity;
   String? productPhoto;
   String? postedOn;
+  String? categoryName;
   String? categoryId;
   String? userId;
 
@@ -22,6 +23,7 @@ class Product {
       this.quantity,
       this.productPhoto,
       this.postedOn,
+      this.categoryName,
       this.categoryId,
       this.userId});
 
@@ -33,6 +35,7 @@ class Product {
     quantity = json['quantity'];
     productPhoto = json['product_photo'];
     postedOn = json['posted_on'];
+    categoryName = json['category_name'];
     categoryId = json['category_id'];
     userId = json['user_id'];
   }
@@ -46,6 +49,7 @@ class Product {
     data['quantity'] = quantity;
     data['product_photo'] = productPhoto;
     data['posted_on'] = postedOn;
+    data['category_name'] = categoryName;
     data['category_id'] = categoryId;
     data['user_id'] = userId;
     return data;

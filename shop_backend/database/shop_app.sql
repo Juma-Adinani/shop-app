@@ -43,7 +43,7 @@ VALUES
         '0755384902',
         'Morogoro - Tanzania',
         sha1('jumaadinani'),
-        2
+        3
     ),
     (
         'Asha',
@@ -51,7 +51,7 @@ VALUES
         '0688904029',
         'Dar Es Salaam - Tanzania',
         sha1('ashamohammedi'),
-        2
+        3
     ),
     (
         'Joshua',
@@ -59,18 +59,18 @@ VALUES
         '0620300029',
         'Mwanza - Tanzania',
         sha1('joshuaanthony'),
-        2
+        3
     );
 
-CREATE TABLE categories(
+CREATE TABLE product_categories(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(30) NOT NULL UNIQUE
 );
 
 INSERT INTO
-    categories(category_name)
+    product_categories(category_name)
 VALUES
-    ('Furniture');
+    ('Samani'),('Mavazi'),('Vyakula'),('Vinywaji'),('vifaa vya umeme'),('mapambo');
 
 CREATE TABLE products(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -82,7 +82,7 @@ CREATE TABLE products(
     posted_on DATETIME DEFAULT CURRENT_TIMESTAMP,
     category_id INT NOT NULL,
     user_id INT NOT NULL,
-    FOREIGN KEY (category_id) REFERENCES categories (id),
+    FOREIGN KEY (category_id) REFERENCES product_categories (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
@@ -136,9 +136,10 @@ CREATE TABLE orders(
 --     FOREIGN KEY (user_id) REFERENCES users (id)
 -- );
 
-CREATE TABLE mpesa_account(
+CREATE TABLE payment_methods(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     phoneNumber VARCHAR(12) UNIQUE NOT NULL,
     amount INT(10) NOT NULL,
     pin INT(4) NOT NULL
 );
+

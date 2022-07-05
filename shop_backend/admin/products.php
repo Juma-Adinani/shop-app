@@ -90,6 +90,7 @@ include_once '../config/connection.php';
                 $description = mysqli_real_escape_string($con, $_POST['description']);
                 $price = mysqli_real_escape_string($con, $_POST['price']);
                 $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
+                $category = mysqli_real_escape_string($con, $_POST['category']);
 
                 if (isset($_POST['post'])) {
                     //checking the format of a file
@@ -102,7 +103,7 @@ include_once '../config/connection.php';
                         if (move_uploaded_file($tmpname, $filepath)) {
 
                             $sql = $con->query("INSERT INTO products(product_name, description, price, quantity, product_photo, category_id, user_id ) 
-                                                VALUES ('$name', '$description','$price','$quantity','$filename', 1, 1)");
+                                                VALUES ('$name', '$description','$price','$quantity','$filename', '$category', 1)");
 
                             if (!mysqli_error($con)) {
                                 echo '<center class="alert alert-success">Product posted successfully</center>';
@@ -148,8 +149,16 @@ include_once '../config/connection.php';
                     </div>
                     <div class="col-6">
                         <label for="category" class="form-label text-muted">Category</label>
-                        <select required name="category" id="category" class="form-control" disabled>
-                            <option value="1">Furniture</option>
+                        <select required name="category" id="category" class="form-control">
+                            <option value="">choose category...</option>
+                            <?php
+                            $sql = $con->query("SELECT * FROM product_categories");
+                            while ($row = mysqli_fetch_assoc($sql)) {
+                            ?>
+                                <option value="<?php echo $row['id']; ?>"><?php echo $row['category_name']; ?></option>
+                            <?php
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="col-6">

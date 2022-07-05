@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $orderedQuantity = mysqli_real_escape_string($con, $_POST['quantity']);
         $location = 'Dar Es Salaam';
 
-        $fetch_mpesa_details = $con->query("SELECT phoneNumber FROM mpesa_account");
+        $fetch_mpesa_details = $con->query("SELECT phoneNumber FROM payment_methods");
 
         if (mysqli_num_rows($fetch_mpesa_details) > 0) {
 
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             if (in_array($phoneNumber, $result_phone_number)) {
 
-                $fetch_amount = $con->query("SELECT amount from mpesa_account WHERE phoneNumber = $phoneNumber");
+                $fetch_amount = $con->query("SELECT amount from payment_methods WHERE phoneNumber = $phoneNumber");
 
                 if (mysqli_num_rows($fetch_amount) == 1) {
 
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $response['info'] = 'salio lako ni ' . $balance;
                     } else {
 
-                        $fetch_pin = $con->query("SELECT pin FROM mpesa_account WHERE phoneNumber = $phoneNumber");
+                        $fetch_pin = $con->query("SELECT pin FROM payment_methods WHERE phoneNumber = $phoneNumber");
 
                         if (mysqli_num_rows($fetch_pin) == 1) {
 
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         $sql = "DELETE FROM cart  WHERE user_id = $userId";
                                         $query = mysqli_query($con, $sql);
 
-                                        $sql = $con->query("UPDATE mpesa_account SET amount = $remained WHERE phoneNumber = $phoneNumber");
+                                        $sql = $con->query("UPDATE payment_methods SET amount = $remained WHERE phoneNumber = $phoneNumber");
                                         $response['status'] = 'SUCCESS';
                                         $response['message'] = 'Oda imefanyika kikamilifu';
                                         $response['totalPrice'] = $total_price;

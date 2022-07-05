@@ -59,18 +59,31 @@ class ProductListItems extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-              'TZS ${product.price}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children:<Widget>[
+                Text(
+                  'TZS ${product.price}',
+                  style: const TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                Text(
+                  '${product.productName}',
+                  style: const TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+              ],
             ),
             Text(
-              '${product.productName}',
+              'Kategoria: ${product.categoryName}',
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 15,
               ),
+            ),
+            const SizedBox(
+              height: 3,
             ),
           ],
         ),

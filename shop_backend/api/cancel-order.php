@@ -20,12 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $phone = $row['phone_number'];
             $cancelFee =  $row['amount'] * 0.1;
             $returnedAmount = $row['amount'] - $cancelFee;
-            $sql_mpesa = $con->query("SELECT amount FROM mpesa_account WHERE phoneNumber = '" . $phone . "'");
+            $sql_mpesa = $con->query("SELECT amount FROM payment_methods WHERE phoneNumber = '" . $phone . "'");
             if (!mysqli_error($con)) {
                 $mpesa_fetch = mysqli_fetch_assoc($sql_mpesa);
                 $newAmount = $returnedAmount + $mpesa_fetch['amount'];
 
-                $mpesa_update = $con->query("UPDATE mpesa_account SET amount = $newAmount  WHERE phoneNumber = '" . $phone . "'");
+                $mpesa_update = $con->query("UPDATE payment_methods SET amount = $newAmount  WHERE phoneNumber = '" . $phone . "'");
 
                 //return a quantity to each product accordingly
                 $quantityFetch = $con->query("SELECT products.id as id, quantity as current_quantity, ordered_quantity 

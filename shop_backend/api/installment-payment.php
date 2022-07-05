@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $pin = mysqli_real_escape_string($con, $_POST['pin']);
         $orderid = mysqli_real_escape_string($con, $_POST['orderid']);
 
-        $fetch_mpesa_details = $con->query("SELECT phoneNumber FROM mpesa_account");
+        $fetch_mpesa_details = $con->query("SELECT phoneNumber FROM payment_methods");
 
         if (mysqli_num_rows($fetch_mpesa_details) > 0) {
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             if (in_array($phoneNumber, $result_phone_number)) {
 
-                $fetch_amount = $con->query("SELECT amount from mpesa_account WHERE phoneNumber = $phoneNumber");
+                $fetch_amount = $con->query("SELECT amount from payment_methods WHERE phoneNumber = $phoneNumber");
 
                 if (mysqli_num_rows($fetch_amount) == 1) {
 
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $message = 'Huna salio la kutosha, Ongeza salio kuweza kukamilisha muamala huu';
                     } else {
 
-                        $fetch_pin = $con->query("SELECT pin FROM mpesa_account WHERE phoneNumber = $phoneNumber");
+                        $fetch_pin = $con->query("SELECT pin FROM payment_methods WHERE phoneNumber = $phoneNumber");
 
                         if (mysqli_num_rows($fetch_pin) == 1) {
 
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         $status = 1;
                                     }
 
-                                    $mpesaQuery = $con->query("UPDATE mpesa_account SET amount = '$mpesaAmount' WHERE phoneNumber = '$phoneNumber'");
+                                    $mpesaQuery = $con->query("UPDATE payment_methods SET amount = '$mpesaAmount' WHERE phoneNumber = '$phoneNumber'");
 
                                     $orderQuery = $con->query("UPDATE orders SET amount = '$newAmount', to_be_paid = '$tobepaid', status_id = '$status' WHERE order_id = '$orderid'");
 

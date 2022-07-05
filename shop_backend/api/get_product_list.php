@@ -6,7 +6,12 @@ $response  = [];
 
 if ($_SERVER['REQUEST_METHOD']== 'GET') {
 
-    $sql = $con->query("SELECT * FROM products WHERE quantity != 0 ORDER BY posted_on DESC");
+    $sql = $con->query("SELECT products.id as id, product_name, description, price, quantity, 
+                        product_photo, posted_on, category_name, category_id, user_id
+                        FROM products, product_categories
+                        WHERE quantity != 0 
+                        AND products.category_id = product_categories.id 
+                        ORDER BY posted_on DESC");
     
     if(!mysqli_error($con)){
         if (mysqli_num_rows($sql) >  0) {

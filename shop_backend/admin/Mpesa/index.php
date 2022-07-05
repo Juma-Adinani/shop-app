@@ -87,7 +87,7 @@ include_once '../../config/connection.php';
         $pin = mysqli_real_escape_string($con, $_POST['pin']);
         $phoneNumber = '255' . $phone;
 
-        $sql = $con->query("INSERT INTO mpesa_account (phoneNumber, amount, pin) VALUES ('$phoneNumber','$amount','$pin') ");
+        $sql = $con->query("INSERT INTO payment_methods (phoneNumber, amount, pin) VALUES ('$phoneNumber','$amount','$pin') ");
         if (!mysqli_error($con)) {
 
           echo '<div class="alert alert-success">Added successfully</div>';
