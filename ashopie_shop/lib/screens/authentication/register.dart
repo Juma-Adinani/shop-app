@@ -17,12 +17,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController sirname = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController address = TextEditingController();
   final _registerFormKey = GlobalKey<FormState>();
   Future<void> userRegistration() async {
     var response = await http.post(Uri.parse(Request.registration), body: {
       'firstname': firstname.text,
       'sirname': sirname.text,
       'phone_number': phoneNumber.text.toString(),
+      'address': address.text,
       'password': password.text
     });
     Map<String, dynamic> result = json.decode(response.body);
@@ -49,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text("Jaribu tena!"),
+                  child: const Text("Try again!"),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -78,7 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               children: [
                 const Text(
-                  "JISAJILI",
+                  "CREATE ACCOUNT",
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w900,
@@ -95,14 +97,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Tafadhali ingiza jina lako la kwanza';
+                            return 'Please enter your firstname';
                           }
                           return null;
                         },
                         controller: firstname,
                         keyboardType: TextInputType.name,
                         decoration: const InputDecoration(
-                          labelText: "Ingiza jina la kwanza",
+                          labelText: "Enter firstname",
                           border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.person),
                         ),
@@ -113,14 +115,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Tafadhali ingiza jina la mwisho';
+                            return 'Please enter your surname';
                           }
                           return null;
                         },
                         controller: sirname,
                         keyboardType: TextInputType.name,
                         decoration: const InputDecoration(
-                          labelText: "Ingiza jina la mwisho",
+                          labelText: "Enter surname",
                           border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.person),
                         ),
@@ -130,15 +132,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       TextFormField(
                         validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Tafadhali ingiza namba ya simu';
+                          if (value!.isEmpty || value.length != 12) {
+                            return 'Please enter valid phone number (start with 255)';
                           }
                           return null;
                         },
                         controller: phoneNumber,
                         keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
-                          labelText: "Ingiza namba ya simu",
+                          labelText: "Enter phone number",
                           border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.phone),
                         ),
@@ -149,7 +151,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Tafadhali ingiza neno siri.';
+                            return 'Please enter your valid physical address';
+                          }
+                          return null;
+                        },
+                        controller: address,
+                        keyboardType: TextInputType.phone,
+                        decoration: const InputDecoration(
+                          labelText: "Enter address (eg. Mwanza - Tanzania)",
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.mail),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      TextFormField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your password';
                           }
                           return null;
                         },
@@ -157,7 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
                         decoration: const InputDecoration(
-                          labelText: "Ingiza neno siri",
+                          labelText: "Enter password",
                           border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.lock),
                           suffixIcon: Icon(Icons.remove_red_eye),
@@ -185,7 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                           },
                           child: const Text(
-                            "JISAJILI",
+                            "REGISTER",
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -210,7 +230,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Umeshajisajili tayari?",
+                      "Have an account?",
                       style: TextStyle(
                         color: Colors.black.withOpacity(0.7),
                       ),
@@ -224,7 +244,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         );
                       },
-                      child: const Text("Ingia"),
+                      child: const Text("login"),
                     )
                   ],
                 ),
@@ -236,27 +256,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

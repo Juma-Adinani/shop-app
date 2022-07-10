@@ -75,7 +75,7 @@ include_once '../config/connection.php';
 <body oncontextmenu="return false" class="snippet-body">
     <div class="container d-flex justify-content-center">
         <div class="col-4 border-bottom text-center bg-light mt-4">
-            <a href="./" class="text-primary">Back</a>
+            <a href="./" class="text-primary">Dashboard</a>
         </div>
     </div>
     <div class="container d-flex justify-content-center mt-5">

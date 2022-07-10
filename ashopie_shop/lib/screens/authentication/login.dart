@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text("Sawa!"),
+                  child: const Text("Try again!"),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 const Text(
-                  "INGIA",
+                  "LOGIN",
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w900,
@@ -127,14 +127,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Tafadhali ingiza namba yako ya simu iliyo sahihi';
+                            return 'Please enter a valid phone number';
                           }
                           return null;
                         },
                         controller: phoneNumber,
                         keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
-                          labelText: "Ingiza namba ya simu",
+                          labelText: "Enter phone number",
                           border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.phone),
                         ),
@@ -145,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Tafadhali ingiza neno siri lako';
+                            return 'Please enter your password';
                           }
                           return null;
                         },
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
                         decoration: const InputDecoration(
-                          labelText: "Ingiza neno siri",
+                          labelText: "Enter password",
                           border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.lock),
                           suffixIcon: Icon(Icons.remove_red_eye),
@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           TextButton(
                             onPressed: () {},
-                            child: const Text("Umesahau neno siri?"),
+                            child: const Text("Forgot password?"),
                           ),
                         ],
                       ),
@@ -193,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           },
                           child: const Text(
-                            "INGIA",
+                            "SIGN IN",
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -218,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Bado hujajisajili?",
+                      "Not have an account?",
                       style: TextStyle(
                         color: Colors.black.withOpacity(0.7),
                       ),
@@ -232,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
                       },
-                      child: const Text("Jisajili sasa"),
+                      child: const Text("Create account"),
                     )
                   ],
                 ),

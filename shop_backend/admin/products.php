@@ -75,7 +75,7 @@ include_once '../config/connection.php';
 <body oncontextmenu="return false" class="snippet-body">
     <div class="container d-flex justify-content-center">
         <div class="col-4 border-bottom text-center bg-light mt-4">
-            <a href="./" class="text-primary">Back</a>
+            <a href="./" class="text-primary">Dashboard</a>
         </div>
     </div>
     <div class="container d-flex justify-content-center">
@@ -86,11 +86,12 @@ include_once '../config/connection.php';
                 $filename = basename($_FILES['photo']['name']);
                 $filepath = $path . $filename;
                 $filetype = pathinfo($filepath, PATHINFO_EXTENSION);
-                $name = mysqli_real_escape_string($con, $_POST['product']);
-                $description = mysqli_real_escape_string($con, $_POST['description']);
-                $price = mysqli_real_escape_string($con, $_POST['price']);
-                $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
-                $category = mysqli_real_escape_string($con, $_POST['category']);
+                $name = pg_escape_string($con, $_POST['product']);
+                $description = pg_escape_string($con, $_POST['description']);
+                $price = pg_escape_string($con, $_POST['price']);
+                $quantity = pg_escape_string($con, $_POST['quantity']);
+                $category = pg_escape_string($con, $_POST['category']);
+                $postedOn = date("d-m-Y, H:i:s");
 
                 if (isset($_POST['post'])) {
                     //checking the format of a file
@@ -102,15 +103,15 @@ include_once '../config/connection.php';
                         //inserting data into a database
                         if (move_uploaded_file($tmpname, $filepath)) {
 
-                            $sql = $con->query("INSERT INTO products(product_name, description, price, quantity, product_photo, category_id, user_id ) 
-                                                VALUES ('$name', '$description','$price','$quantity','$filename', '$category', 1)");
+                            $sql = pg_query($con, "INSERT INTO products(product_name, description, price, quantity, product_photo, posted_on, category_id, user_id ) 
+                                                VALUES ('$name', '$description','$price','$quantity','$filename','$postedOn','$category', 1)");
 
-                            if (!mysqli_error($con)) {
+                            if (!pg_last_error($con)) {
                                 echo '<center class="alert alert-success">Product posted successfully</center>';
                                 header("Refresh:3;");
                             } else {
                                 echo '<center class="alert alert-danger">There is an error!..</center>';
-                                die(mysqli_error($con));
+                                die(pg_last_error($con));
                             }
                         } else {
                             echo '<center class="alert alert-danger">Error on uploading a photo.!</center>';
@@ -152,8 +153,8 @@ include_once '../config/connection.php';
                         <select required name="category" id="category" class="form-control">
                             <option value="">choose category...</option>
                             <?php
-                            $sql = $con->query("SELECT * FROM product_categories");
-                            while ($row = mysqli_fetch_assoc($sql)) {
+                            $sql = pg_query($con, "SELECT * FROM product_categories");
+                            while ($row = pg_fetch_assoc($sql)) {
                             ?>
                                 <option value="<?php echo $row['id']; ?>"><?php echo $row['category_name']; ?></option>
                             <?php

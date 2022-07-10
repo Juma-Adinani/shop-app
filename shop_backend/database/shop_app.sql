@@ -18,7 +18,7 @@ CREATE TABLE users(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     firstname VARCHAR(30) NOT NULL,
     sirname VARCHAR(30) NOT NULL,
-    phone_number VARCHAR(10) NOT NULL UNIQUE,
+    phone_number VARCHAR(15) NOT NULL UNIQUE,
     address VARCHAR (100) NULL,
     password VARCHAR(100) NOT NULL,
     joined_on DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -40,7 +40,7 @@ VALUES
     (
         'Juma',
         'Adinani',
-        '0755384902',
+        '255755384902',
         'Morogoro - Tanzania',
         sha1('jumaadinani'),
         3
@@ -48,7 +48,7 @@ VALUES
     (
         'Asha',
         'Mohammedi',
-        '0688904029',
+        '255688904029',
         'Dar Es Salaam - Tanzania',
         sha1('ashamohammedi'),
         3
@@ -56,7 +56,7 @@ VALUES
     (
         'Joshua',
         'Anthony',
-        '0620300029',
+        '255620300029',
         'Mwanza - Tanzania',
         sha1('joshuaanthony'),
         3

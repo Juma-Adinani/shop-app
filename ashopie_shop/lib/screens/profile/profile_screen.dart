@@ -74,7 +74,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             children: [
               const Center(
                 child: Text(
-                  "Taarifa Binafsi",
+                  "Personal Info",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w500,
@@ -136,10 +136,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               const SizedBox(
                 height: 35,
               ),
-              buildTextField("Jina kamili", fname + ' ' + lname, false),
-              buildTextField("Namba ya simu", phone, false),
-              buildTextField("Neno siri", "********", true),
-              buildTextField("jukumu", role, false),
+              buildTextField("Fullname", fname + ' ' + lname, false),
+              buildTextField("Phone number", phone, false),
+              buildTextField("Password", "********", true),
+              buildTextField("Role", role, false),
               const SizedBox(
                 height: 35,
               ),
@@ -155,7 +155,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     onPressed: () {},
                     child: const Text(
-                      "Sitisha",
+                      "cancel",
                       style: TextStyle(
                         fontSize: 14,
                         letterSpacing: 2.2,
@@ -174,7 +174,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     onPressed: () {},
                     child: const Text(
-                      "Hifadhi",
+                      "update",
                       style: TextStyle(
                         fontSize: 14,
                         letterSpacing: 2.2,

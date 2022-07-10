@@ -82,18 +82,18 @@ include_once '../../config/connection.php';
     <div class="card mt-5 px-3 py-4 shadow-lg">
       <?php
       if (isset($_POST['submit'])) {
-        $phone = mysqli_real_escape_string($con, $_POST['phone']);
-        $amount = mysqli_real_escape_string($con, $_POST['amount']);
-        $pin = mysqli_real_escape_string($con, $_POST['pin']);
+        $phone = pg_escape_string($con, $_POST['phone']);
+        $amount = pg_escape_string($con, $_POST['amount']);
+        $pin = pg_escape_string($con, $_POST['pin']);
         $phoneNumber = '255' . $phone;
 
-        $sql = $con->query("INSERT INTO payment_methods (phoneNumber, amount, pin) VALUES ('$phoneNumber','$amount','$pin') ");
-        if (!mysqli_error($con)) {
+        $sql = pg_query($con,"INSERT INTO payment_methods (phoneNumber, amount, pin) VALUES ('$phoneNumber','$amount','$pin') ");
+        if (!pg_last_error($con)) {
 
           echo '<div class="alert alert-success">Added successfully</div>';
         } else {
 
-          echo '<div class="alert alert-danger">Failed to add..</div>' . mysqli_error($con);
+          echo '<div class="alert alert-danger">Failed to add..</div>' . pg_last_error($con);
         }
       }
       ?>

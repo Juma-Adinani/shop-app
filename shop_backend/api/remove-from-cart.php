@@ -10,29 +10,29 @@ $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-    $user = mysqli_real_escape_string($con, $_POST['userid']);
-    $cartid = mysqli_real_escape_string($con, $_POST['cartid']);
+    $user = pg_escape_string($con, $_POST['userid']);
+    $cartid = pg_escape_string($con, $_POST['cartid']);
 
     $sql = "SELECT product_id, ordered_quantity FROM cart WHERE id = '$cartid' AND user_id = '$user'";
-    $result = mysqli_query($con, $sql);
+    $result = pg_query($con, $sql);
 
-    $row = mysqli_fetch_assoc($result);
+    $row = pg_fetch_assoc($result);
     $quantity = $row['ordered_quantity'];
     $product = $row['product_id'];
 
-    $sql = $con->query("SELECT quantity FROM products WHERE id = '$product'");
-    $productFetch = mysqli_fetch_assoc($sql);
+    $sql = pg_query($con, "SELECT quantity FROM products WHERE id = '$product'");
+    $productFetch = pg_fetch_assoc($sql);
     $availableQuantity = $productFetch['quantity'];
 
     $newQuantity = $availableQuantity + $quantity;
 
-    $returnQuantity = $con->query("UPDATE products SET quantity = '$newQuantity' WHERE id = '$product'");
+    $returnQuantity = pg_query($con, "UPDATE products SET quantity = '$newQuantity' WHERE id = '$product'");
 
-    $sql = $con->query("DELETE FROM cart WHERE id = '$cartid'");
+    $sql = pg_query($con, "DELETE FROM cart WHERE id = '$cartid'");
 
-    if (!mysqli_error($con)) {
+    if (!pg_last_error($con)) {
         $status = "OK";
-        $message = "Bidhaa imeondolewa kwenye kapu kikamililifu";
+        $message = "Product removed from your cart";
     }
 } else {
     $status = "ERROR";

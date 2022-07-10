@@ -92,7 +92,7 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
         title: const Text(
-          'Malipo ya bidhaa',
+          'Payment for your order',
           style: TextStyle(color: Colors.grey),
         ),
         centerTitle: true,
@@ -208,13 +208,13 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
                               controller: phoneNumber,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Tafadhali ingiza namba ya simu';
+                                  return 'Please enter phone number';
                                 }
                                 return null;
                               },
                               keyboardType: TextInputType.phone,
                               decoration: const InputDecoration(
-                                labelText: "Ingiza namba ya simu",
+                                labelText: "Enter phone number",
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.phone),
                               ),
@@ -226,13 +226,13 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
                               controller: amount,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Tafadhali ingiza kiasi';
+                                  return 'Please enter amount';
                                 }
                                 return null;
                               },
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
-                                labelText: "Ingiza kiasi",
+                                labelText: "Enter amount",
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.money),
                               ),
@@ -244,13 +244,13 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
                               controller: pin,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Tafadhali namba ya siri';
+                                  return 'Please enter PIN';
                                 }
                                 return null;
                               },
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
-                                labelText: "Ingiza namba ya siri",
+                                labelText: "Enter PIN",
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.key),
                               ),
@@ -275,7 +275,7 @@ class _CashPaymentScreenState extends State<CashPaymentScreen> {
                                       horizontal: 10.0,
                                     ),
                                     child: Text(
-                                      'Lipa sasa',
+                                      'Pay now',
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),

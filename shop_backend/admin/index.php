@@ -2,14 +2,17 @@
 
 include_once '../config/connection.php';
 
-$sql = $con->query("SELECT count(*) as count FROM orders");
-$orders = mysqli_fetch_assoc($sql)['count'];
+$sql = pg_query($con, "SELECT count(DISTINCT order_id) as count FROM orders WHERE status_id = 2");
+$completeOrders = pg_fetch_assoc($sql)['count'];
 
-$sql = $con->query("SELECT count(*) as count FROM products");
-$products = mysqli_fetch_assoc($sql)['count'];
+$sql = pg_query($con, "SELECT count(DISTINCT order_id) as count FROM orders WHERE status_id = 1 GROUP BY order_id");
+$pendingOrders = pg_fetch_assoc($sql)['count'];
 
-$sql = $con->query("SELECT count(*) as count FROM users WHERE id != 1");
-$users = mysqli_fetch_assoc($sql)['count'];
+$sql = pg_query($con, "SELECT count(*) as count FROM products");
+$products = pg_fetch_assoc($sql)['count'];
+
+$sql = pg_query($con, "SELECT count(*) as count FROM users WHERE id != 1");
+$users = pg_fetch_assoc($sql)['count'];
 
 ?>
 <!DOCTYPE html>
@@ -65,9 +68,9 @@ $users = mysqli_fetch_assoc($sql)['count'];
                   <div class="mt-4">
                     <h1><?php echo $users; ?></h1>
                   </div>
-                  <h3 class="card-title">Watumiaji</h3>
+                  <h3 class="card-title">USERS</h3>
                   <div class="btn-group mt-2">
-                    <a href="./users.php" class="btn btn-sm btn-outline-light">
+                    <a href="./#" class="btn btn-sm btn-outline-light">
                       open
                     </a>
                   </div>
@@ -78,11 +81,26 @@ $users = mysqli_fetch_assoc($sql)['count'];
               <div class="card shadow">
                 <div class="card-body text-center text-light" style="background: #17a2b8;">
                   <div class="mt-4">
-                    <h1><?php echo $orders; ?></h1>
+                    <h1><?php echo $completeOrders; ?></h1>
                   </div>
-                  <h3 class="card-title">Oda</h3>
+                  <h3 class="card-title">COMPLETE ORDER</h3>
                   <div class="btn-group mt-2">
-                    <a href="./orders.php" class="btn btn-sm btn-outline-light">
+                    <a href="./complete-orders.php" class="btn btn-sm btn-outline-light">
+                      open
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow">
+                <div class="card-body text-center text-light" style="background: #17a2b8;">
+                  <div class="mt-4">
+                    <h1><?php echo $pendingOrders; ?></h1>
+                  </div>
+                  <h3 class="card-title">ORDER IN PROGRESS</h3>
+                  <div class="btn-group mt-2">
+                    <a href="./order-on-progress.php" class="btn btn-sm btn-outline-light">
                       open
                     </a>
                   </div>
@@ -95,7 +113,7 @@ $users = mysqli_fetch_assoc($sql)['count'];
                   <div class="mt-4">
                     <h1><?php echo $products; ?></h1>
                   </div>
-                  <h3 class="card-title">Bidhaa</h3>
+                  <h3 class="card-title">PRODUCTS</h3>
                   <div class="btn-group mt-2">
                     <a href="./products.php" class="btn btn-sm btn-outline-light">
                       open

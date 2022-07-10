@@ -7,53 +7,54 @@ $response = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST)) {
 
-        $userId = mysqli_real_escape_string($con, $_POST['userid']); // from shared preferences
-        $phoneNumber = mysqli_real_escape_string($con, $_POST['phone']);
-        $amount = mysqli_real_escape_string($con, $_POST['amount']);
-        $pin = mysqli_real_escape_string($con, $_POST['pin']);
-        $orderedQuantity = mysqli_real_escape_string($con, $_POST['quantity']);
+        $userId = pg_escape_string($con, $_POST['userid']); // from shared preferences
+        $phoneNumber = pg_escape_string($con, $_POST['phone']);
+        $amount = pg_escape_string($con, $_POST['amount']);
+        $pin = pg_escape_string($con, $_POST['pin']);
+        $orderedQuantity = pg_escape_string($con, $_POST['quantity']);
+        $orderDate = date("d-m-Y, H:i:s");
         $location = 'Dar Es Salaam';
 
-        $fetch_mpesa_details = $con->query("SELECT phoneNumber FROM payment_methods");
+        $fetch_mpesa_details = pg_query($con, "SELECT phoneNumber as phone FROM payment_methods");
 
-        if (mysqli_num_rows($fetch_mpesa_details) > 0) {
+        if (pg_num_rows($fetch_mpesa_details) > 0) {
 
-            while ($array_check = mysqli_fetch_assoc($fetch_mpesa_details)) {
+            while ($array_check = pg_fetch_assoc($fetch_mpesa_details)) {
 
-                $result_phone_number[] = $array_check['phoneNumber'];
+                $result_phone_number[] = $array_check['phone'];
             }
             if (in_array($phoneNumber, $result_phone_number)) {
 
-                $fetch_amount = $con->query("SELECT amount from payment_methods WHERE phoneNumber = $phoneNumber");
+                $fetch_amount = pg_query($con, "SELECT amount from payment_methods WHERE phoneNumber = '" . $phoneNumber . "'");
 
-                if (mysqli_num_rows($fetch_amount) == 1) {
+                if (pg_num_rows($fetch_amount) == 1) {
 
-                    $amount_check = mysqli_fetch_assoc($fetch_amount);
+                    $amount_check = pg_fetch_assoc($fetch_amount);
                     $balance = $amount_check['amount'];
 
                     if ($amount > $balance || $amount < 0) {
 
                         $response['status'] = "ERROR";
-                        $response['message'] = "Huna salio la kutosha, Ongeza salio kuweza kukamilisha muamala huu";
+                        $response['message'] = "Insufficient balance";
                         $response['info'] = 'salio lako ni ' . $balance;
                     } else {
 
-                        $fetch_pin = $con->query("SELECT pin FROM payment_methods WHERE phoneNumber = $phoneNumber");
+                        $fetch_pin = pg_query($con, "SELECT pin FROM payment_methods WHERE phoneNumber = '" . $phoneNumber . "'");
 
-                        if (mysqli_num_rows($fetch_pin) == 1) {
+                        if (pg_num_rows($fetch_pin) == 1) {
 
-                            $pin_check = mysqli_fetch_assoc($fetch_pin);
+                            $pin_check = pg_fetch_assoc($fetch_pin);
 
                             if ($pin != $pin_check['pin']) {
                                 $response['status'] = "ERROR";
-                                $response['message'] = "Namba ya siri uliyoingiza siyo sahihi";
+                                $response['message'] = "Incorrect PIN";
                             } else {
 
 
                                 $total_price = 0;
                                 $price = 0;
-                                $fetch_price = $con->query("SELECT SUM(price * ordered_quantity) AS total FROM cart, products WHERE cart.user_id = '" . $userId . "' AND cart.product_id = products.id");
-                                while ($fetch_result = mysqli_fetch_assoc($fetch_price)) {
+                                $fetch_price = pg_query($con, "SELECT SUM(price::int * ordered_quantity) AS total FROM cart, products WHERE cart.user_id = '" . $userId . "' AND cart.product_id = products.id");
+                                while ($fetch_result = pg_fetch_assoc($fetch_price)) {
 
                                     $total_price = $fetch_result['total'];
                                 }
@@ -79,30 +80,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                                 // insert all from cart to orders table
                                 $sql = "SELECT ordered_quantity, product_id FROM cart  WHERE user_id = $userId";
-                                $query = mysqli_query($con, $sql);
-                                if (!mysqli_error($con)) {
-                                    if (mysqli_num_rows($query) > 0) {
+                                $query = pg_query($con, $sql);
+                                if (!pg_last_error($con)) {
+                                    if (pg_num_rows($query) > 0) {
                                         $stamp = time();
-                                        while ($row = mysqli_fetch_assoc($query)) {
+                                        while ($row = pg_fetch_assoc($query)) {
                                             $product = $row['product_id'];
-                                            $order_query = $con->query(
-                                                "INSERT INTO orders (order_id, product_id, ordered_quantity, location, phone_number, amount, to_be_paid, user_id, status_id) 
-                                                VALUES ('$stamp','$product', '$orderedQuantity', '$location', '$phoneNumber', '$amount', '$toBePaid', '$userId', $status)"
+                                            $order_query = pg_query(
+                                                $con,
+                                                "INSERT INTO orders (order_id, product_id, ordered_quantity, order_date, location, phone_number, amount, to_be_paid, user_id, status_id) 
+                                                VALUES ('$stamp','$product', '$orderedQuantity', '$orderDate', '$location', '$phoneNumber', '$amount', '$toBePaid', '$userId', $status)"
                                             );
                                         }
 
                                         $sql = "DELETE FROM cart  WHERE user_id = $userId";
-                                        $query = mysqli_query($con, $sql);
+                                        $query = pg_query($con, $sql);
 
-                                        $sql = $con->query("UPDATE payment_methods SET amount = $remained WHERE phoneNumber = $phoneNumber");
+                                        $sql = pg_query($con, "UPDATE payment_methods SET amount = $remained WHERE phoneNumber = '" . $phoneNumber . "'");
                                         $response['status'] = 'SUCCESS';
-                                        $response['message'] = 'Oda imefanyika kikamilifu';
+                                        $response['message'] = 'Payment done successfully';
                                         $response['totalPrice'] = $total_price;
                                         $response['toBePaid'] = $toBePaid;
                                         // 'salio' => $remained,
                                     } else {
                                         $response['status'] = 'EMPTY';
-                                        $response['message'] = 'Hakuna bidhaa kwenye kapu lako';
+                                        $response['message'] = 'No available products in your cart';
                                     }
                                 } else {
                                     $response['status'] = 'ERROR';
@@ -114,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             } else {
                 $response['status'] = 'ERROR';
-                $response['message'] = 'Namba haijasajiliwa m-pesa';
+                $response['message'] = 'phone number is not registered';
             }
         } else {
             $response['status'] = 'ERROR';

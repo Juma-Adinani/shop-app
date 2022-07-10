@@ -15,6 +15,7 @@ class ProductListItems extends StatelessWidget {
         height: 250,
         width: double.infinity,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(
               height: 170,
@@ -77,7 +78,7 @@ class ProductListItems extends StatelessWidget {
               ],
             ),
             Text(
-              'Kategoria: ${product.categoryName}',
+              'category: ${product.categoryName}',
               style: const TextStyle(
                 fontSize: 15,
               ),

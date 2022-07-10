@@ -31,7 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: ListView(
           children: [
             const Text(
-              "Marekebisho",
+              "Settings",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
             ),
             const SizedBox(
@@ -47,7 +47,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   width: 8,
                 ),
                 Text(
-                  "Akaunti",
+                  "Account",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -62,13 +62,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(
               height: 10,
             ),
-            buildAccountOptionRow(context, "Badili neno siri"),
+            buildAccountOptionRow(context, "Change password"),
             buildAccountOptionRow(
-                context, "rekebisha maudhui"), //content settings
-            buildAccountOptionRow(context, "Jamii"), //social
-            buildAccountOptionRow(context, "Lugha"),
+                context, "content settings"), //content settings
+            buildAccountOptionRow(context, "social"), //social
+            buildAccountOptionRow(context, "language"),
             buildAccountOptionRow(
-                context, "Usiri na usalama"), //privacy and security
+                context, "privacy and security"), //privacy and security
             const SizedBox(
               height: 40,
             ),
@@ -82,7 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   width: 8,
                 ),
                 Text(
-                  "Taarifa", //notifications
+                  "notifications", //notifications
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -94,10 +94,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(
               height: 10,
             ),
-            buildNotificationOptionRow("Mpya", true), //new for you
+            buildNotificationOptionRow("new for you", true), //new for you
             buildNotificationOptionRow(
-                "Shughuli za akaunti", true), //account activity
-            buildNotificationOptionRow("Fursa", false), //opportunity
+                "account activity", true), //account activity
+            buildNotificationOptionRow("opportunity", false), //opportunity
             const SizedBox(
               height: 50,
             ),
@@ -117,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   );
                 },
                 child: const Text(
-                  "Rudi Mwanzo",
+                  "Return to homepage",
                   style: TextStyle(
                     fontSize: 16,
                     letterSpacing: 2.2,
@@ -168,9 +168,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: const <Widget>[
-                    Text("Chaguo 1"),
-                    Text("Chaguo 2"),
-                    Text("Chaguo 3"),
+                    Text("Option 1"),
+                    Text("Option 2"),
+                    Text("Option 3"),
                   ],
                 ),
                 actions: [
@@ -178,7 +178,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text("Funga"),
+                    child: const Text("close"),
                   ),
                 ],
               );

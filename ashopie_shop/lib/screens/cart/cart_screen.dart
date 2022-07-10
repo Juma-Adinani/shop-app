@@ -40,7 +40,7 @@ class _CartScreenState extends State<CartScreen> {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text("Oda sasa"),
+                  child: const Text("Add"),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -96,7 +96,7 @@ class _CartScreenState extends State<CartScreen> {
       drawer: const MenuSideBar(),
       appBar: AppBar(
         title: const Text(
-          'Kikapu changu',
+          'Cart',
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
@@ -139,7 +139,7 @@ class _CartScreenState extends State<CartScreen> {
             children: [
               Expanded(
                 child: Text(
-                  "Jumla: $totalAmount TZS",
+                  "Total: $totalAmount TZS",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 18.0,
@@ -156,7 +156,7 @@ class _CartScreenState extends State<CartScreen> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text('Lipa sasa kuweka oda yako'),
+                                title: const Text('Pay now to order'),
                                 titleTextStyle: const TextStyle(
                                   color: Color.fromARGB(255, 33, 49, 61),
                                   fontSize: 20,
@@ -170,7 +170,7 @@ class _CartScreenState extends State<CartScreen> {
                                     children: [
                                       TextButton(
                                         child: const Text(
-                                          "sitisha",
+                                          "Cancel",
                                           style: TextStyle(
                                               fontSize: 17.8,
                                               color: Colors.red),
@@ -181,7 +181,7 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                       TextButton(
                                         child: Text(
-                                          "Lipia sasa $totalAmount",
+                                          "Pay now $totalAmount",
                                           style:
                                               const TextStyle(fontSize: 17.8),
                                         ),
@@ -204,7 +204,7 @@ class _CartScreenState extends State<CartScreen> {
                         },
                         color: Colors.blueAccent,
                         child: const Text(
-                          'Weka oda sasa',
+                          'Make an order',
                           style: TextStyle(color: Colors.white, fontSize: 17),
                         ),
                       ),
@@ -219,7 +219,7 @@ class _CartScreenState extends State<CartScreen> {
           future: getCart(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return const Text('Hakuna bidhaa kwenye kapu lako');
+              return const Text('No available products in your cart');
             } else if (snapshot.hasData) {
               var cartItems = snapshot.data as List;
               return ListView.builder(
@@ -282,11 +282,11 @@ class _CartScreenState extends State<CartScreen> {
                                   "TZS ${cartItems[index]['price']} @",
                                 ),
                                 Text(
-                                  "Idadi ulizooda: ${cartItems[index]['ordered_quantity']}",
+                                  "Quantity ordered: ${cartItems[index]['ordered_quantity']}",
                                 ),
-                                Text(
-                                  "Jumla (tzs): ${cartItems[index]['totalPrice']}",
-                                ),
+                                // Text(
+                                //   "Total (tzs): ${cartItems[index]['totalPrice']}",
+                                // ),
                                 const SizedBox(
                                   height: 20,
                                 ),

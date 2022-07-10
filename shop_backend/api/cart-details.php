@@ -11,31 +11,32 @@ $message = "";
 $quantityTotal = 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user = mysqli_real_escape_string($con, $_POST['user_id']);
+    $user = pg_escape_string($con, $_POST['user_id']);
     $sql = "SELECT cart.id as id, ordered_quantity, quantity, description, 
-            product_name, product_photo, price, cart.user_id, price * ordered_quantity as totalPrice
+            product_name, product_photo, price, cart.user_id, price::int * ordered_quantity::int as totalPrice
             FROM cart, products 
             WHERE cart.product_id = products.id
             AND cart.user_id = '" . $user . "'";
-    $query = mysqli_query($con, $sql);
-    if (!mysqli_error($con)) {
-        if (mysqli_num_rows($query) > 0) {
-            while ($row = mysqli_fetch_assoc($query)) {
+    $query = pg_query($con, $sql);
+    if (!pg_last_error($con)) {
+        if (pg_num_rows($query) > 0) {
+            while ($row = pg_fetch_assoc($query)) {
                 $product = $row;
                 array_push($products, $product);
             }
-            $sql = $con->query("SELECT SUM((SELECT price FROM products WHERE id = product_id) * ordered_quantity) as totalAmount, SUM(ordered_quantity) as quantity FROM cart WHERE user_id = '" . $user . "'");
-            $fetch = mysqli_fetch_assoc($sql);
-            $total = $fetch['totalAmount'];
+            $sql = pg_query($con, "SELECT SUM((SELECT price FROM products WHERE id = product_id)::int * ordered_quantity) as totalamount, SUM(ordered_quantity) as quantity 
+                                FROM cart WHERE user_id = '" . $user . "'");
+            $fetch = pg_fetch_assoc($sql);
+            $total = $fetch['totalamount'];
             $quantityTotal = $fetch['quantity'];
             $quantityTotal = intval($quantityTotal);
         } else {
             $status = 'EMPTY';
-            $message = 'Hakuna bidhaa kwenye kapu lako';
+            $message = 'No available products in your cart';
         }
     } else {
         $status = 'Error';
-        $message = 'There is an error -> ' . mysqli_error($con);
+        $message = 'There is an error -> ' . pg_last_error($con);
     }
 } else {
     $status = 'Error';
@@ -48,8 +49,8 @@ $response = [
     "data" => [
         "products" => $products,
         "total" => $total,
-        "totalQuantity"=>$quantityTotal
+        "totalQuantity" => $quantityTotal
     ]
 ];
-
+// die(json_encode(var_dump($product)));
 echo json_encode($response);

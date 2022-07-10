@@ -10,50 +10,50 @@ $data = array();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST)) {
 
-        $userId = mysqli_real_escape_string($con, $_POST['userid']); // from shared preferences
-        $phoneNumber = mysqli_real_escape_string($con, $_POST['phone']);
-        $amount = mysqli_real_escape_string($con, $_POST['amount']);
-        $pin = mysqli_real_escape_string($con, $_POST['pin']);
-        $orderid = mysqli_real_escape_string($con, $_POST['orderid']);
+        $userId = pg_escape_string($con, $_POST['userid']); // from shared preferences
+        $phoneNumber = pg_escape_string($con, $_POST['phone']);
+        $amount = pg_escape_string($con, $_POST['amount']);
+        $pin = pg_escape_string($con, $_POST['pin']);
+        $orderid = pg_escape_string($con, $_POST['orderid']);
 
-        $fetch_mpesa_details = $con->query("SELECT phoneNumber FROM payment_methods");
+        $fetch_mpesa_details = pg_query($con, "SELECT phoneNumber as phone FROM payment_methods");
 
-        if (mysqli_num_rows($fetch_mpesa_details) > 0) {
+        if (pg_num_rows($fetch_mpesa_details) > 0) {
 
-            while ($array_check = mysqli_fetch_assoc($fetch_mpesa_details)) {
+            while ($array_check = pg_fetch_assoc($fetch_mpesa_details)) {
 
-                $result_phone_number[] = $array_check['phoneNumber'];
+                $result_phone_number[] = $array_check['phone'];
             }
             if (in_array($phoneNumber, $result_phone_number)) {
 
-                $fetch_amount = $con->query("SELECT amount from payment_methods WHERE phoneNumber = $phoneNumber");
+                $fetch_amount = pg_query($con, "SELECT amount from payment_methods WHERE phoneNumber = '".$phoneNumber."'");
 
-                if (mysqli_num_rows($fetch_amount) == 1) {
+                if (pg_num_rows($fetch_amount) == 1) {
 
-                    $amount_check = mysqli_fetch_assoc($fetch_amount);
+                    $amount_check = pg_fetch_assoc($fetch_amount);
                     $balance = $amount_check['amount'];
 
                     if ($amount > $balance || $amount < 0) {
 
                         $status = "ERROR";
-                        $message = 'Huna salio la kutosha, Ongeza salio kuweza kukamilisha muamala huu';
+                        $message = 'Insufficient balance';
                     } else {
 
-                        $fetch_pin = $con->query("SELECT pin FROM payment_methods WHERE phoneNumber = $phoneNumber");
+                        $fetch_pin = pg_query($con, "SELECT pin FROM payment_methods WHERE phoneNumber = '".$phoneNumber."'");
 
-                        if (mysqli_num_rows($fetch_pin) == 1) {
+                        if (pg_num_rows($fetch_pin) == 1) {
 
-                            $pin_check = mysqli_fetch_assoc($fetch_pin);
+                            $pin_check = pg_fetch_assoc($fetch_pin);
 
                             if ($pin != $pin_check['pin']) {
                                 $status = "ERROR";
-                                $message = "Namba ya siri uliyoingiza siyo sahihi";
+                                $message = "PIN is incorrect";
                             } else {
-                                $orders = $con->query("SELECT order_id, amount, to_be_paid FROM orders WHERE order_id = '$orderid'");
+                                $orders = pg_query($con, "SELECT order_id, amount, to_be_paid FROM orders WHERE order_id = '$orderid'");
 
-                                if (mysqli_num_rows($orders) > 0) {
+                                if (pg_num_rows($orders) > 0) {
 
-                                    $fetchOrders = mysqli_fetch_assoc($orders);
+                                    $fetchOrders = pg_fetch_assoc($orders);
                                     $tobepaid = $fetchOrders['to_be_paid'];
                                     $fetchedAmount = $fetchOrders['amount'];
 
@@ -73,13 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         $status = 1;
                                     }
 
-                                    $mpesaQuery = $con->query("UPDATE payment_methods SET amount = '$mpesaAmount' WHERE phoneNumber = '$phoneNumber'");
+                                    $mpesaQuery = pg_query($con, "UPDATE payment_methods SET amount = '$mpesaAmount' WHERE phoneNumber = '".$phoneNumber."'");
 
-                                    $orderQuery = $con->query("UPDATE orders SET amount = '$newAmount', to_be_paid = '$tobepaid', status_id = '$status' WHERE order_id = '$orderid'");
+                                    $orderQuery = pg_query($con, "UPDATE orders SET amount = '$newAmount', to_be_paid = '$tobepaid', status_id = '$status' WHERE order_id = '$orderid'");
 
-                                    if (!mysqli_error($con)) {
+                                    if (!pg_last_error($con)) {
                                         $status = "OK";
-                                        $message = "Malipo yamefanyika kikamilifu";
+                                        $message = "Payment done successfully";
                                     }
 
                                     // $data = [
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                                 } else {
                                     $status = 'ERROR';
-                                    $message = 'Order chossen is not available';
+                                    $message = 'Order chosen is not available';
                                 }
                             }
                         }
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             } else {
                 $status = 'ERROR';
-                $message = 'Namba ya simu haijasajiliwa';
+                $message = 'Phone number is not registered';
             }
         } else {
             $status = 'ERROR';

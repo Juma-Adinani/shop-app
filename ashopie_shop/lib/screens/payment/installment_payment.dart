@@ -94,7 +94,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
         title: const Text(
-          'Malizia Malipo ya bidhaa',
+          'Complete payment for your order',
           style: TextStyle(color: Colors.grey),
         ),
         centerTitle: true,
@@ -210,13 +210,13 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen> {
                               controller: phoneNumber,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Tafadhali ingiza namba ya simu';
+                                  return 'Please enter phone number';
                                 }
                                 return null;
                               },
                               keyboardType: TextInputType.phone,
                               decoration: const InputDecoration(
-                                labelText: "Ingiza namba ya simu",
+                                labelText: "Enter phone number",
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.phone),
                               ),
@@ -228,13 +228,13 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen> {
                               controller: amount,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Tafadhali ingiza kiasi';
+                                  return 'Please enter amount';
                                 }
                                 return null;
                               },
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
-                                labelText: "Ingiza kiasi",
+                                labelText: "Enter amount",
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.money),
                               ),
@@ -246,13 +246,13 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen> {
                               controller: pin,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Tafadhali namba ya siri';
+                                  return 'Please enter PIN';
                                 }
                                 return null;
                               },
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
-                                labelText: "Ingiza namba ya siri",
+                                labelText: "Enter PIN",
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.key),
                               ),
@@ -277,7 +277,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen> {
                                       horizontal: 10.0,
                                     ),
                                     child: Text(
-                                      'Lipa sasa',
+                                      'Pay now',
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),

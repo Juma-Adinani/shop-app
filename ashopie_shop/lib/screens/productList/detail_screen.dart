@@ -41,7 +41,7 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text("Jaribu tena!"),
+                  child: const Text("Try again!"),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -55,14 +55,14 @@ class _DetailScreenState extends State<DetailScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Bidhaa imewekwa kwenye kapu kikamilifu'),
+              title: const Text('Product added to cart'),
               titleTextStyle: const TextStyle(
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text("Sawa"),
+                  child: const Text("OK"),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -88,7 +88,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text("Jaribu tena!"),
+                child: const Text("Try again!"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -179,7 +179,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 ),
                               ),
                               const Text(
-                                'Maelezo',
+                                'Description',
                                 style: TextStyle(
                                   fontSize: 18,
                                 ),
@@ -206,7 +206,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       height: 15,
                     ),
                     const Text(
-                      'Idadi',
+                      'Quantity',
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -263,7 +263,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           _saveToCart();
                         },
                         child: const Text(
-                          "Weka kwenye kikapu",
+                          "Add to cart",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,

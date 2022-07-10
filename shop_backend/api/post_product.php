@@ -10,12 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_FILES)) {
 
         $path = "../assets/uploaded_products/";
-        $name = mysqli_real_escape_string($con, $_POST['product_name']);
-        $description = mysqli_escape_string($con, $_POST['description']);
-        $price = mysqli_real_escape_string($con, $_POST['price']);
-        $quantity = mysqli_real_escape_string($con, $_POST['quantity']);
-        // $photo = mysqli_real_escape_string($con, $_POST['product_photo']);
-        // $category_id = mysqli_real_escape_string($con, $_POST['category_id']);
+        $name = pg_escape_string($con, $_POST['product_name']);
+        $description = pg_escape_string($con, $_POST['description']);
+        $price = pg_escape_string($con, $_POST['price']);
+        $quantity = pg_escape_string($con, $_POST['quantity']);
+        $postedOn = date("d-m-Y, H:i:s");
+        // $photo = pg_escape_string($con, $_POST['product_photo']);
+        // $category_id = pg_escape_string($con, $_POST['category_id']);
         $filename = basename($_FILES['product_photo']['name']);
         $filepath = $path . $filename;
         $filetype = pathinfo($filepath, PATHINFO_EXTENSION);
@@ -31,16 +32,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 //inserting data into a database
                 if (move_uploaded_file($tmpname, $filepath)) {
 
-                    $sql = "INSERT INTO products (product_name, description, price, quantity, product_photo, category_id, user_id)
-                            VALUES ('$name', '$description', '$price', '$quantity', '$filename', 1, 1)";
-                    $result = mysqli_query($con, $sql);
+                    $sql = "INSERT INTO products (product_name, description, price, quantity, product_photo, posted_on, category_id, user_id)
+                            VALUES ('$name', '$description', '$price', '$quantity', '$filename', '$postedOn',1, 1)";
+                    $result = pg_query($con, $sql);
 
-                    if (!mysqli_error($con)) {
+                    if (!pg_last_error($con)) {
                         $response['status'] = "OK";
                         $response['message'] = "Product Posted Successfully..!";
                     } else {
                         $response['status'] = "Error";
-                        $response['message'] = "Fail to post => " . mysqli_error($con);
+                        $response['message'] = "Fail to post => " . pg_last_error($con);
                     }
                 } else {
 

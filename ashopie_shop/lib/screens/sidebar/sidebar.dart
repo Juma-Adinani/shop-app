@@ -103,7 +103,7 @@ class _MenuSideBarState extends State<MenuSideBar> {
               );
             },
             leading: const Icon(Icons.home),
-            title: const Text('Mwanzo'),
+            title: const Text('Home'),
           ),
           ListTile(
             selected: cartColor,
@@ -122,7 +122,7 @@ class _MenuSideBarState extends State<MenuSideBar> {
               );
             },
             leading: const Icon(Icons.shopping_cart),
-            title: const Text('Kikapu'),
+            title: const Text('Cart'),
           ),
           ListTile(
             selected: historyColor,
@@ -141,7 +141,7 @@ class _MenuSideBarState extends State<MenuSideBar> {
               );
             },
             leading: const Icon(Icons.shopping_bag),
-            title: const Text('Historia ya oda'),
+            title: const Text('Order history'),
           ),
           ListTile(
             selected: aboutColor,
@@ -155,7 +155,7 @@ class _MenuSideBarState extends State<MenuSideBar> {
               });
             },
             leading: const Icon(Icons.info),
-            title: const Text('Kuhusu sisi'),
+            title: const Text('About us'),
           ),
           ListTile(
             selected: contactUsColor,
@@ -169,7 +169,7 @@ class _MenuSideBarState extends State<MenuSideBar> {
               });
             },
             leading: const Icon(Icons.phone),
-            title: const Text('Wasiliana nasi'),
+            title: const Text('Contact us'),
           ),
           ListTile(
             enabled: true,
@@ -177,7 +177,7 @@ class _MenuSideBarState extends State<MenuSideBar> {
               _logout();
             },
             leading: const Icon(Icons.exit_to_app),
-            title: const Text('Ondoka'),
+            title: const Text('Logout'),
           ),
         ],
       ),

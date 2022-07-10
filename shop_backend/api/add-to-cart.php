@@ -7,13 +7,14 @@ $response = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!empty($_POST)) {
-        $user = mysqli_real_escape_string($con, $_POST['user_id']);
-        $product = mysqli_real_escape_string($con, $_POST['product_id']);
-        $quantity = mysqli_real_escape_string($con, $_POST['ordered_quantity']);
-        $sql = $con->query("SELECT quantity FROM products WHERE id = $product");
-        if (!mysqli_error($con)) {
-            
-            $fetch_product = mysqli_fetch_assoc($sql);
+        $user = pg_escape_string($con, $_POST['user_id']);
+        $product = pg_escape_string($con, $_POST['product_id']);
+        $quantity = pg_escape_string($con, $_POST['ordered_quantity']);
+        $addedOn = date("d-m-Y, H:i:s");
+        $sql = pg_query($con, "SELECT quantity FROM products WHERE id = $product");
+        if (!pg_last_error($con)) {
+
+            $fetch_product = pg_fetch_assoc($sql);
 
             if ($quantity <= 0) {
                 $response['error'] = 'you cannot order 0 quantity';
@@ -21,24 +22,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if ($quantity <= $fetch_product['quantity']) {
 
-                    $sql = $con->query("INSERT INTO cart (product_id, ordered_quantity, user_id) VALUES ('$product','$quantity', '$user')");
+                    $sql = pg_query($con, "INSERT INTO cart (product_id, ordered_quantity, user_id, added_on) VALUES ('$product','$quantity', '$user', '$addedOn')");
 
                     $remained_quantity = $fetch_product['quantity'] - $quantity;
+                    
 
-                    $sql = $con->query("UPDATE products SET quantity = $remained_quantity WHERE id = $product");
+                    $sql = pg_query($con, "UPDATE products SET quantity = $remained_quantity WHERE id = $product");
 
                     $response['status'] = 'OK';
                     $response['message'] = 'A remained quantity is ' . $remained_quantity;
                 } else {
                     $response['status'] = 'info';
-                    $response['info'] = 'Idadi unayooda imezidi idadi iliyopo';
+                    $response['info'] = 'Ordered quantity exceeds available quantity';
                     $response['available'] = $fetch_product['quantity'];
                 }
             }
         } else {
 
             $response['status'] = 'Error';
-            $response['message'] = 'There is an error -> ' . mysqli_error($con);
+            $response['message'] = 'There is an error -> ' . pg_last_error($con);
         }
     } else {
         $response['status'] = 'Error';

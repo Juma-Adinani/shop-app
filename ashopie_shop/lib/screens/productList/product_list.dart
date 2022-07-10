@@ -92,7 +92,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       drawer: const MenuSideBar(),
       appBar: AppBar(
         title: const Text(
-          'Bidhaa zetu',
+          'Our products',
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
@@ -136,7 +136,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 if (snapshot.hasError) {
                   return const Center(
                     child: Text(
-                      'Hakuna bidhaa hivi sasa..',
+                      'No available products for now..',
                       style: TextStyle(
                         fontSize: 20.3,
                         fontWeight: FontWeight.bold,

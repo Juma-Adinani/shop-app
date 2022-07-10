@@ -154,7 +154,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       if (items['status'].toString().contains('EMPTY')) {
         _messageDialog(
           items['message'].toString(),
-          'Oda sasa',
+          'Order now',
           const ProductListScreen(),
           Colors.blue,
         );
@@ -195,7 +195,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       drawer: const MenuSideBar(),
       appBar: AppBar(
         title: const Text(
-          'Oda zangu',
+          'Order history',
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
@@ -238,7 +238,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
             children: [
               Expanded(
                 child: Text(
-                  "Jumla: $totalAmount TZS",
+                  "Total: $totalAmount TZS",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 18.0,
@@ -301,24 +301,24 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Bidhaa umeoda: ${orderItems[index]['product']}',
+                                    'Product ordered: ${orderItems[index]['product']}',
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       fontSize: 12,
                                     ),
                                   ),
                                   Text(
-                                    'jumla ya idadi: ${orderItems[index]['quantity']}',
+                                    'ordered quantity: ${orderItems[index]['quantity']}',
                                     style: const TextStyle(
                                       fontSize: 12.0,
                                       color: Colors.grey,
                                     ),
                                   ),
                                   Text(
-                                    "Pesa uliyotoa: ${orderItems[index]['amount']} TZS",
+                                    "Amount paid: ${orderItems[index]['amount']} TZS",
                                   ),
                                   Text(
-                                    "Tarehe umeoda: ${orderItems[index]['order_date']}",
+                                    "Date ordered: ${orderItems[index]['order_date']}",
                                   ),
                                   // Text(
                                   //   "order id: ${orderItems[index]['id']}",
@@ -346,13 +346,13 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                                               child: TextButton(
                                                 onPressed: () {
                                                   _cancelDialog(
-                                                      'kusitisha oda utakatwa 10% ya pesa ya oda',
-                                                      'sitisha',
-                                                      'endelea',
+                                                      'Cancelling an order 10% of amount will be taken',
+                                                      'Cancel',
+                                                      'Proceed',
                                                       orderItems[index]['id']);
                                                 },
                                                 child: const Text(
-                                                  'Sitisha oda',
+                                                  'Cancel order',
                                                   style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight: FontWeight.bold,
@@ -383,9 +383,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                                             : TextButton(
                                                 onPressed: () {
                                                   _completePaymentDialog(
-                                                    'Malizia malipo ya oda yako',
-                                                    'hapana',
-                                                    'Endelea',
+                                                    'Complete payment for your order',
+                                                    'Cancel',
+                                                    'Proceed',
                                                     InstallmentPaymentScreen(
                                                       orderid: orderItems[index]
                                                           ['id'],
@@ -393,7 +393,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                                                   );
                                                 },
                                                 child: Text(
-                                                  'bado ${orderItems[index]['to_be_paid']} TZS',
+                                                  'Yet: ${orderItems[index]['to_be_paid']} TZS',
                                                   style: const TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.bold,

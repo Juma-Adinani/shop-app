@@ -14,19 +14,19 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   int currentPage = 0;
   List<Map<String, String>> onBoardData = [
     {
-      "text": "Karibu AShopie Shop, Duka la kimtandao!",
+      "text": "Welcome to AShopie Shop!",
       "image": "assets/images/splash_1.png"
     },
     {
-      // "text": "We help people conect with furniture stores \naround Tanzania",
-      "text":
-          "Tunasaidia wateja kuwaunganisha na maduka ya samani\nyenye bidhaa bora hapa nchini Tanzania",
+      "text": "We help people conect with furniture stores \naround Tanzania",
+      // "text":
+      //     "Tunasaidia wateja kuwaunganisha na maduka ya samani\nyenye bidhaa bora hapa nchini Tanzania",
       "image": "assets/images/splash_2.png"
     },
     {
-      // "text": "We show the easy way to shop. \nJust stay at home with us",
-      "text":
-          "Tunakupatia njia bora, rahisi na salama katika kununua bidhaa,\nTulia nyumbani tukuhudumie",
+      "text": "We show the easy way to shop. \nJust stay at home with us",
+      // "text":
+      //     "Tunakupatia njia bora, rahisi na salama katika kununua bidhaa,\nTulia nyumbani tukuhudumie",
       "image": "assets/images/splash_3.png"
     },
   ];
@@ -91,7 +91,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                             );
                           },
                           child: Text(
-                            'Karibu',
+                            'Welcome',
                             style: TextStyle(
                               fontSize: getProportionateScreenWidth(18),
                               color: Colors.white,

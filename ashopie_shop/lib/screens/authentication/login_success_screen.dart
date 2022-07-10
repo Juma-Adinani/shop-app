@@ -63,7 +63,7 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.08),
               Text(
-                "Habari ${widget.name}, Karibu",
+                "Hello ${widget.name}, welcome",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(30),
                   fontWeight: FontWeight.bold,
@@ -93,7 +93,7 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
                       );
                     },
                     child: Text(
-                      'Tazama bidhaa sasa',
+                      'Get started',
                       style: TextStyle(
                         fontSize: getProportionateScreenWidth(14),
                         color: Colors.white,
