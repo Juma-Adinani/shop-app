@@ -158,7 +158,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(
-                      height: 100,
+                      height: 150,
                       child: Row(
                         children: <Widget>[
                           Column(
@@ -176,6 +176,18 @@ class _DetailScreenState extends State<DetailScreen> {
                                 style: const TextStyle(
                                   fontSize: 18,
                                   color: Color(0xff9b96d6),
+                                ),
+                              ),
+                              const Text(
+                                'Category',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Text(
+                                '${widget.product.categoryName}',
+                                style: const TextStyle(
+                                  fontSize: 15,
                                 ),
                               ),
                               const Text(
@@ -206,7 +218,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       height: 15,
                     ),
                     const Text(
-                      'Quantity',
+                      'Order quantity',
                       style: TextStyle(
                         fontSize: 18,
                       ),

@@ -40,7 +40,7 @@ class _CartScreenState extends State<CartScreen> {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text("Add"),
+                  child: const Text("Ok"),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
