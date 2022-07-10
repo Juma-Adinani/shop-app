@@ -9,10 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST)) {
         $phone = pg_escape_string($con, $_POST['phone_number']);
         $password = pg_escape_string($con, $_POST['password']);
-        $pass = sha1($password);
+        // $pass = sha1($password);
 
         $sql = "SELECT users.id as id, firstname, role_type, phone_number, sirname FROM users, roles
-                    WHERE password = '" . $pass . "' 
+                    WHERE password = '" . $password . "' 
                     AND phone_number = '" . $phone . "' 
                     AND users.role_id = roles.id";
         $query = pg_query($con, $sql);
