@@ -114,7 +114,7 @@ include_once '../config/connection.php';
                                 die(pg_last_error($con));
                             }
                         } else {
-                            echo '<center class="alert alert-danger">Error on uploading a photo.!</center>';
+                            echo '<center class="alert alert-danger">Error on uploading a photo.!</center>'.pg_last_error($con);
                         }
                     } else {
                         echo '<center class="alert alert-danger">Make Sure You post photo in (jpg, png, jpeg) formats..!</center>';
