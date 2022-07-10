@@ -82,7 +82,7 @@ include_once '../config/connection.php';
         <div class="card mt-5 px-3 py-4 shadow-sm w-75">
             <?php
             if (isset($_FILES['photo'])) {
-                $path = "../assets/uploads/";
+                $path = "../assets/uploaded-photos/";
                 $filename = basename($_FILES['photo']['name']);
                 $filepath = $path . $filename;
                 $filetype = pathinfo($filepath, PATHINFO_EXTENSION);

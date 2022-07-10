@@ -12,5 +12,5 @@ class Request {
   static String completeOrder = baseUrl + 'installment-payment.php';
   static String removeCart = baseUrl + 'remove-from-cart.php';
   static String imageUrl =
-      'https://ashopie.herokuapp.com/assets/uploads/';
+      'https://ashopie.herokuapp.com/assets/uploaded-photos/';
 }
