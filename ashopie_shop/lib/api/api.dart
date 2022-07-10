@@ -1,6 +1,6 @@
 class Request {
-  // static String baseUrl = 'http://192.168.137.105/shop_app/shop_backend/api/';
-  static String baseUrl = 'http://localhost/shop_app/shop_backend/api/';
+  // static String baseUrl = 'http://localhost/shop_app/shop_backend/api/';
+  static String baseUrl = 'https://ashopie.herokuapp.com/api/';
   static String registration = baseUrl + 'register.php';
   static String login = baseUrl + 'login.php';
   static String getProductList = baseUrl + 'get_product_list.php';

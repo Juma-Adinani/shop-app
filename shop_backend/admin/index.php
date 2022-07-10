@@ -5,7 +5,7 @@ include_once '../config/connection.php';
 $sql = pg_query($con, "SELECT count(DISTINCT order_id) as count FROM orders WHERE status_id = 2");
 $completeOrders = pg_fetch_assoc($sql)['count'];
 
-$sql = pg_query($con, "SELECT count(DISTINCT order_id) as count FROM orders WHERE status_id = 1 GROUP BY order_id");
+$sql = pg_query($con, "SELECT count(DISTINCT order_id) as count FROM orders WHERE status_id = 1");
 $pendingOrders = pg_fetch_assoc($sql)['count'];
 
 $sql = pg_query($con, "SELECT count(*) as count FROM products");
@@ -13,7 +13,6 @@ $products = pg_fetch_assoc($sql)['count'];
 
 $sql = pg_query($con, "SELECT count(*) as count FROM users WHERE id != 1");
 $users = pg_fetch_assoc($sql)['count'];
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
